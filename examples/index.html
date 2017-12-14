@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ConversionBlock Demo</title>
+	    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/narrow-jumbotron.css" rel="stylesheet">
+
+</head>
+<body>
+	<div class="container">
+		<div class="step">
+	        <h1 class="display-3">Step1</h1>
+	        <p class="lead">
+				Step1
+	        </p>
+	        <p>
+	        	<a class="btn btn-lg btn-success next" href="javascript:void(0);" role="button">next</a>
+	        </p>
+		</div>
+
+		<div class="step">
+	        <h1 class="display-3">Step2</h1>
+	        <p class="lead">
+				Step2
+	        </p>
+	        <p>
+	        	<a class="btn btn-lg btn-success next" href="javascript:void(0);" role="button">next</a>
+	        	<a class="btn btn-lg btn-success prev" href="javascript:void(0);" role="button">prev</a>
+	        </p>
+		</div>
+
+		<div class="step">
+	        <h1 class="display-3">Step3</h1>
+	        <p class="lead">
+				Step3
+				<input type="checkbox" name="ck" id="check"> check me!
+	        </p>
+	        <p>
+	        	<a class="btn btn-lg btn-success next" href="javascript:void(0);" role="button">next</a>
+	        	<a class="btn btn-lg btn-success prev" href="javascript:void(0);" role="button">prev</a>
+	        </p>
+		</div>
+
+		<div class="step">
+	        <h1 class="display-3">Step4</h1>
+	        <p class="lead">
+				Step4
+	        </p>
+	        <p>
+	        	<a class="btn btn-lg btn-success" href="javascript:gotostep1();" role="button">Go to Step1</a>
+	        </p>
+		</div>
+	</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="./js/jquery.ConversionBlock.js"></script>
+<script type="text/javascript">
+
+	$(function () {
+		var cb = function (index) {
+			switch(index) {
+				case 3:
+					var len = $('input:checked').length;
+					if ( len == 0 ){
+						alert('Please check');
+						return false;
+					} else {
+						return true;
+					}
+					break;
+				default :
+					return true;
+					break;
+			}
+		};
+		$('div.step').ConversionBlock({'callback':cb});
+	});
+
+	function gotostep1(argument) {
+		$('div.step').ConversionBlock({'index':1});
+	}
+</script>
+</html>
