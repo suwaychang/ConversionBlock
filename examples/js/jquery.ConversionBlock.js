@@ -16,20 +16,46 @@ var cb;
 		var defaults = {
 			'index':1,
 			'next':'.next',
-			'prev':'.prev'
+			'prev':'.prev',
+			'effect':'default'
 		};
 		var settings = $.extend({},defaults, options);//将一个空对象做为第一个参数
 		var vindex = settings.index;
 		var index = vindex-1;
 		var callback = settings.callback;
+		var effect = settings.effect;
 		var step = $(this),
 	        step_num = step.length;
 	    if ( index > step_num) {
 		    alert('Check no specified block');
 		}
-		$(this).hide();
-		$(this).eq(index).show();
-
+		step.css('display', 'none');
+		step.eq(index).css('display', 'block');
+		/*動作*/
+		function active(e) {
+			var vIndex = index;
+			if (e == 'n'){
+				vIndex = vIndex + 1;
+			}
+			if (e == 'p'){
+				vIndex = vIndex - 1;
+			}
+			step.css('display', 'none');
+			switch(effect) {
+        		case 'slide':
+        			step.eq(index).slideUp();
+					step.eq(vIndex).slideDown();
+        			break;
+        		case 'fade':
+        			step.eq(index).css('display', 'none').fadeOut();
+					step.eq(vIndex).fadeIn();
+        			break;
+        		default :
+        			step.eq(index).css('display', 'none');
+					step.eq(vIndex).css('display', 'block');
+        			break;
+        	}
+		}
 		//切換下一個區塊
 		function next (dom) {
 	        var check = true;
@@ -38,16 +64,14 @@ var cb;
 	           check = callback.call(this, vindex); // brings the scope to the callback
 	        }
 	        if( check ){
-	            step.hide();
-	            step.eq(index+1).show();
+	        	active('n');
 	            index++;
 	            vindex++;
 	        }
 		}
 		//切換上一個區塊
 	    function prev(dom) {
-	        step.hide();
-	        step.eq(index-1).show();
+	    	active('p');
 	        if( index > 0 ){
 	            index--;
 	            vindex--;
